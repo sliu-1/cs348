@@ -1,0 +1,98 @@
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(140, 171, 190, 0.114);
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.AddFriend {
+  align-items: center;
+  font-size: calc(5px + 2vmin);
+  padding: 0px 10px;
+}
+
+.Title {
+  flex: 5;  
+}
+
+.Button {
+  justify-self: left;
+}
+
+.Friend {
+  background-color: #a4a8d1ff;
+  padding: 10px 0px;
+  border: 1px solid;
+  text-align: center;
+  display: flex;
+}
+
+.App-body {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+}
+
+.Friends-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px
+}
+
+.Friends-item {
+  flex: 0 1 150px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.Friends-Container {
+  text-align: left;
+  display: block;
+  padding: 10px 30px;
+}
+
+.Friends-Container:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

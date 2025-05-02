@@ -1,0 +1,213 @@
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  height: 100%;
+  width: 100%;
+}
+
+.modal-content {
+  background-color: white;
+  width: 40vw;
+  text-align: left;
+  border-color: #595959;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 2px;
+}
+
+.modal-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+  background-color: #a4a8d1ff;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.close-btn {
+  all: unset;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.container {
+  padding: 5px 10px;
+  height: 80vh;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.input { 
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px
+}
+
+.name-input {
+  border: none;
+  border-bottom: 2px solid gray;
+  background: transparent;
+  outline: none;
+  padding: 4px 0;
+  width: 100%;
+}
+
+.name-input:focus {
+  border-bottom-color: rgb(102, 111, 216);
+}
+
+.closeness-input {
+  display: flex;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  width: fit-content;
+  border-radius: 5px;
+  border: solid 1px black;
+}
+
+.closeness-input button.selected {
+  background: rgb(102, 111, 216);
+  color: white;
+  font-weight: bold;
+}
+
+.closeness-input button {
+  border: none;
+  background: #f0f0f0;
+  padding: 4px 16px;
+  cursor: pointer;
+  flex: 1;
+  transition: background 0.2s;
+}
+
+.closeness-input button:not(:last-child) {
+  border-right: 1px solid #757575;
+}
+
+.birthday-input {
+  border: none;
+  border-bottom: 2px solid gray;
+}
+
+.birthday-input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-bottom: solid 2px rgb(102, 111, 216);
+}
+
+.place-input {
+
+}
+
+.likes-input {
+  border: none;
+  border-bottom: 2px solid gray;
+  background: transparent;
+  outline: none;
+  padding: 4px 0;
+  width: 100%;
+}
+
+.likes-input:focus {
+  border-bottom-color: rgb(102, 111, 216);
+}
+
+.dislikes-input {
+  border: none;
+  border-bottom: 2px solid gray;
+  background: transparent;
+  outline: none;
+  padding: 4px 0;
+  width: 100%;
+}
+
+.dislikes-input:focus {
+  border-bottom-color: rgb(102, 111, 216);
+}
+
+.notes-input { 
+  resize: none;
+  width: 100%;
+  min-height: 120px;
+  padding: 8px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.notes-input:focus {
+  outline: none;
+  border-color: rgb(102, 111, 216);
+}
+
+.save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px
+}
+
+.save button {
+  all: unset;                          
+  background-color: rgba(0, 0, 0, 0.2);
+  color: black;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: none;
+  appearance: none;
+}
+
+.save button:hover {
+  background-color: rgb(102, 111, 216, 0.5);
+}
+
+.save button:disabled,
+.save button:disabled:hover {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+
+.add {
+  all: unset;                          
+  background-color: rgba(0, 0, 0, 0.2);
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  box-shadow: none;
+  appearance: none;
+  border-radius: 5px;
+}
+
+.add:hover {
+  background-color: rgb(102, 111, 216, 0.5);
+  border-radius: 5px;
+  cursor: pointer;
+}
