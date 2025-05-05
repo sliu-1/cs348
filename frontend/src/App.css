@@ -88,6 +88,13 @@ html, body, #root {
   border-bottom: 1px solid black;
 }
 
+
+.Link {
+  color: #0645AD;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

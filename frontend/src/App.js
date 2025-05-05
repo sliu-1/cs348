@@ -2,6 +2,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import AddModal from './components/addModal';
 import EditModal from './components/editModal';
+import FilterModal from './components/filterModal';
+import DetailModal from './components/detailModal';
 
 function App() {
 
@@ -10,6 +12,15 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  const [closeness, setCloseness] = useState(undefined)
+  const [startDate, setStartDate] = useState(undefined);
+  const [endDate, setEndDate] = useState(undefined);
+  const [place, setPlace] = useState(undefined);
   
   const [friend, setFriend] = useState({});
 
@@ -58,6 +69,31 @@ function App() {
     getFriends();
   };
 
+  const openFilterModal = () => {
+    setIsFilterModalOpen(true);
+  };
+
+  const closeFilterModal = () => {
+    setIsFilterModalOpen(false);
+  };
+
+  const openDetailModal = (friend) => {
+    setFriend({ ...friend, birthday: new Date(friend.birthday) });
+    setIsDetailModalOpen(true);
+  };
+
+  const closeDetailModal = () => {
+    setIsDetailModalOpen(false);
+  };
+
+  const clearFilter = async () => {
+    await getFriends();
+    setCloseness(undefined);
+    setStartDate(undefined);
+    setEndDate(undefined);
+    setPlace(undefined);
+  };
+
   const deleteFriend = async (id) => {
     try {
       const response = await fetch(`http://localhost:8888/api/deleteFriend/${id}`, {
@@ -91,7 +127,12 @@ function App() {
             </text>
           </div>
           <div className="AddFriend">
-            <button className="Button">
+            <button className="Button" onClick={clearFilter}>
+              Clear Filter
+            </button>
+          </div>
+          <div className="AddFriend">
+            <button className="Button" onClick={openFilterModal}>
               Filter
             </button>
           </div>
@@ -103,7 +144,7 @@ function App() {
               <div className="Friends-list">
                 {friends.filter(friend => friend.closeness == "Close").map(friend => (
                   <div key={friend._id} className='Friends-item'>
-                    {friend.name}
+                    <a className="Link" onClick={() => openDetailModal(friend)}>{friend.name}</a>
                     <button onClick={() => openEditModal(friend)}>edit</button>
                     <button onClick={() => deleteFriend(friend._id)}>delete</button>
                   </div>
@@ -115,7 +156,7 @@ function App() {
               <div className="Friends-list">
                 {friends.filter(friend => friend.closeness == "Normal").map(friend => (
                   <div key={friend._id} className='Friends-item'>
-                    {friend.name}
+                    <a className="Link" onClick={() => openDetailModal(friend)}>{friend.name}</a>
                     <button onClick={() => openEditModal(friend)}>edit</button>
                     <button onClick={() => deleteFriend(friend._id)}>delete</button>
                   </div>
@@ -127,18 +168,20 @@ function App() {
               <div className="Friends-list">
                 {friends.filter(friend => friend.closeness == "New").map(friend => (
                   <div key={friend._id} className='Friends-item'>
-                    {friend.name}
+                    <a className="Link" onClick={() => openDetailModal(friend)}>{friend.name}</a>
                     <button onClick={() => openEditModal(friend)}>edit</button>
                     <button onClick={() => deleteFriend(friend._id)}>delete</button>
                   </div>
                 ))}
               </div>
-              </div>
+            </div>
           </div>
         }
       </div>
-      <EditModal id={friend._id} newFriend={friend} setNewFriend={setFriend} isOpen={isEditModalOpen} closeModal={closeEditModal} getFriends={getFriends} allFriends={friends}/>
+      <EditModal id={friend._id} newFriend={friend} setNewFriend={setFriend} isOpen={isEditModalOpen} closeModal={closeEditModal} getFriends={getFriends} allFriends={friends || [] }/>
       <AddModal isOpen={isModalOpen} closeModal={closeModal} getFriends={getFriends} allFriends={friends}/>
+      <FilterModal isOpen={isFilterModalOpen} closeModal={closeFilterModal} setFriends={setFriends} closeness={closeness} setCloseness={setCloseness} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} place={place} setPlace={setPlace} />
+      <DetailModal id={friend._id} friend={friend} setFriend={setFriend} isOpen={isDetailModalOpen} closeModal={closeDetailModal} allFriends={friends || [] } openEditModal={openEditModal} />
     </div>
   );
 }

@@ -6,7 +6,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddPlace from './addPlace';
 
 const EditModal = ({ id, newFriend, setNewFriend, isOpen, closeModal, getFriends, allFriends }) => {
-
   const availableFriends = allFriends.filter(friend => friend._id !== id);
 
   const [place, setPlace] = useState([]);
@@ -50,8 +49,13 @@ const EditModal = ({ id, newFriend, setNewFriend, isOpen, closeModal, getFriends
     
       setPlace(data.data);
 
-      const selected = place.find(p => p._id === newFriend.place);
-      setNewFriend({...newFriend, place: selected})
+			if (typeof newFriend.place === "string") {
+        const selected = place.find(p => p._id === newFriend.place);
+        setNewFriend({...newFriend, place: selected})
+      } else {
+        console.log("It's not a string!");
+        console.log(newFriend.place)
+      }
       
       if (data.success) {
         console.log(data.data);
@@ -154,11 +158,8 @@ const EditModal = ({ id, newFriend, setNewFriend, isOpen, closeModal, getFriends
                 placeholder='Place'
                 value={newFriend.place?._id || ""}
                 onChange={(e) => {
-                  console.log("here is change")
                   const selected = place.find(p => p._id === e.target.value);
-                  console.log(selected)
                   setNewFriend({ ...newFriend, place: selected });
-                  console.log(newFriend)
                 }}
               >
                 <option value="">-- Select a place --</option>
@@ -174,13 +175,13 @@ const EditModal = ({ id, newFriend, setNewFriend, isOpen, closeModal, getFriends
               <AddIcon/>
             </button>
             <button className='add' onClick={() => {
-                if (newFriend.place?._id) {
-                  deletePlace(newFriend.place?._id)
-                  setNewFriend({ ...newFriend, place: '' });
-                }
-              }}>
-                <DeleteIcon/>
-              </button>
+              if (newFriend.place?._id) {
+                deletePlace(newFriend.place?._id)
+                setNewFriend({ ...newFriend, place: '' });
+              }
+            }}>
+              <DeleteIcon/>
+            </button>
           </div>
 
           <div className="input">
@@ -204,35 +205,42 @@ const EditModal = ({ id, newFriend, setNewFriend, isOpen, closeModal, getFriends
           </div>
 
           <div className="input">
-              <div>
-                <strong>Mutual Friends:</strong>
-                {newFriend.mutuals.map((id) => {
-                  const friend = availableFriends.find(f => f._id === id);
-                  return (
-                    <span key={id} style={{ margin: '0 6px' }}>
-                      {friend?.name} ✕
-                    </span>
-                  );
-                })}
-              </div>
+            Mutual Friends:
 
-              <div style={{ border: '1px solid #ccc', padding: '8px', marginTop: '10px' }}>
-                {availableFriends
-                  .filter(f => !newFriend.mutuals.includes(f._id))
-                  .map(f => (
-                    <div key={f._id} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span>{f.name}</span>
-                      <button
-                        onClick={() =>
-                          setNewFriend({ ...newFriend, mutuals: [...newFriend.mutuals, f._id] })
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  ))}
-              </div>
+            <div style={{ border: '1px solid #ccc', padding: '8px', marginTop: '10px' }}>
+              {availableFriends
+                .filter(f => newFriend.mutuals.includes(f._id))
+                .map(f => (
+                  <div key={f._id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{f.name}</span>
+                    <button
+                      onClick={() =>
+                        setNewFriend({ ...newFriend, mutuals: newFriend.mutuals.filter(f_id => f_id !== f._id) })
+                      }
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
             </div>
+
+            <div style={{ border: '1px solid #ccc', padding: '8px', marginTop: '10px' }}>
+              {availableFriends
+                .filter(f => !newFriend.mutuals.includes(f._id))
+                .map(f => (
+                  <div key={f._id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{f.name}</span>
+                    <button
+                      onClick={() =>
+                        setNewFriend({ ...newFriend, mutuals: [...newFriend.mutuals, f._id] })
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
 
           <div style={{padding: 10}}>
             <label htmlFor="notes">Notes:</label>

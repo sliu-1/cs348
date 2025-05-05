@@ -21,6 +21,21 @@ button {
   width: 100%;
 }
 
+.modal-overlay-1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+}
+
 .modal-content {
   background-color: white;
   width: 40vw;
@@ -116,8 +131,23 @@ button {
   border-bottom: solid 2px rgb(102, 111, 216);
 }
 
-.place-input {
+.details {
+  border: none;
+  border-bottom: 2px solid gray;
+  background: transparent;
+  outline: none;
+  padding: 4px 0;
+  width: 100%;
+}
 
+.details-empty {
+  border: none;
+  border-bottom: 2px solid gray;
+  background: transparent;
+  outline: none;
+  padding: 4px 0;
+  width: 100%;
+  color: gray
 }
 
 .likes-input {
@@ -210,4 +240,9 @@ button {
   background-color: rgb(102, 111, 216, 0.5);
   border-radius: 5px;
   cursor: pointer;
+}
+
+:disabled:hover {
+  cursor: default;
+
 }

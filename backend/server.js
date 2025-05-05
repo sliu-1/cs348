@@ -107,6 +107,33 @@ app.put("/api/updateFriend/:id", async (req, res) => {
     }
 });
 
+app.get("/api/filterFriends", async (req, res) => {
+    const { closeness, startDate, endDate, place } = req.query;
+  
+    const query = {};
+  
+    if (closeness) {
+      query.closeness = closeness;
+    }
+  
+    if (startDate || endDate) {
+      query.birthday = {};
+      if (startDate) query.birthday.$gte = new Date(startDate);
+      if (endDate) query.birthday.$lte = new Date(endDate);
+    }
+
+    if (place) {
+        query.place = place;
+    }
+  
+    try {
+      const friends = await Friend.find(query);
+      res.json({ success: true, data: friends });
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  });
+
 app.get("/api/getPlace", async (req, res) => {
     try {
         const places = await db.collection("places").find({}).toArray(); // raw mongodb sql
