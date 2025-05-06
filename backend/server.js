@@ -20,27 +20,10 @@ app.use(cors());
 
 app.get("/api/getFriend", async (req, res) => {
     try {
-        const friends = await db.collection("friends").find({}).toArray(); // raw mongodb sql
+        const friends = await db.collection("friends").find({}).toArray(); // raw mongodb
         res.status(200).json({ success: true, data: friends });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error: " +  error });
-    }
-});
-
-app.get("/api/getFriend/:id", async (req, res) => {
-    const {id} = req.params;
-
-    try {
-        const objectId = new ObjectId(id);
-        const friend = await db.collection("friends").findOne({ _id: objectId });
-
-        if (!friend) {
-            return res.status(404).json({ success: false, message: "Friend not found" });
-        }
-
-        res.status(200).json({ success: true, data: friend });
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Server Error: " + error });
     }
 });
 
@@ -132,11 +115,11 @@ app.get("/api/filterFriends", async (req, res) => {
     } catch (err) {
       res.status(500).json({ success: false, message: err.message });
     }
-  });
+});
 
 app.get("/api/getPlace", async (req, res) => {
     try {
-        const places = await db.collection("places").find({}).toArray(); // raw mongodb sql
+        const places = await db.collection("places").find({}).toArray(); // raw mongodb
         res.status(200).json({ success: true, data: places });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error: " +  error });
@@ -173,36 +156,6 @@ app.delete("/api/deletePlace/:id", async (req, res) => {
         res.status(200).json({ success: true, message: "Friend removed" });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server error: " + error })
-    }
-});
-
-app.put("/api/updatePlace/:id", async (req, res) => {
-    const { id } = req.params;
-    const params = req.body;
-  
-    if (!params.name || !params.closeness) {
-      return res.status(400).json({ success: false, message: "Please provide both name and closeness." });
-    }
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ success: false, message: "Invalid id" });
-    }
-  
-    try {
-      const updatedPlace = await Place.findByIdAndUpdate(
-        id,
-        params,
-        { new: true, runValidators: true }
-      );
-  
-      if (!updatedPlace) {
-        return res.status(404).json({ success: false, message: "Friend not found" });
-      }
-  
-      res.status(200).json({ success: true, data: updatedPlace });
-    } catch (error) {
-      console.error("Error updating friend with Mongoose:", error);
-      res.status(500).json({ message: "Server Error", error });
     }
 });
 
